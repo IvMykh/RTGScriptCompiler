@@ -39,20 +39,6 @@ Lexer::Lexer()
 	allFrags.push_back(nfaForIDs);
 
 
-	
-
-	//NFAFragment nfaForIF		= NFAFragment::createNFAForString("if");
-	//NFAFragment nfaForELSE		= NFAFragment::createNFAForString("else");
-	//NFAFragment nfaForAND		= NFAFragment::createNFAForString("and");
-	//NFAFragment nfaForOR		= NFAFragment::createNFAForString("or");
-	//NFAFragment nfaForSTRUCT	= NFAFragment::createNFAForString("struct");
-	//
-	//NFAFragment nfaForKeyword =
-	//	NFAFragment::makeParallel({ nfaForIF, nfaForELSE, nfaForAND, nfaForOR, nfaForSTRUCT })
-	//	.addAcceptingState("Keyword");
-	//
-	//allFrags.push_back(nfaForKeyword);
-
 
 	// for integer literals;
 	// [+-]?[0-9]+
@@ -106,9 +92,6 @@ Lexer::Lexer()
 	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('/').addAcceptingState("Operator"));
 	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('(').addAcceptingState("Operator"));
 	allFrags.push_back(NFAFragment::createNFAForSingleSymbol(')').addAcceptingState("Operator"));
-
-	//auto nfa = NFAFragment::makeParallel(allFrags);
-	//cout << "NFA:\n" << nfa << "\n\n\n\n\n\n\n\n\n";
 
 	dfa_ = NFAFragment::makeParallel(allFrags).convertToDFA();
 }

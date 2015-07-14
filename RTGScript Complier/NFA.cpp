@@ -133,7 +133,6 @@ NFAFragment NFAFragment::createNFAForString(const string& str)
 
 NFAFragment NFAFragment::createNFAForRange(const char first, const char last)
 {
-	NFAFragment ending = NFAFragment::createNFAForEpsilon();
 	NFAFragment result;
 
 	result.states_.insert(nfaStateNamesGen_.getNextAvailableName());
@@ -160,7 +159,6 @@ NFAFragment NFAFragment::createNFAForRange(const char first, const char last)
 
 NFAFragment NFAFragment::createNFAForRange(const std::vector<char>& symbols)
 {
-	NFAFragment ending = NFAFragment::createNFAForEpsilon();
 	NFAFragment result;
 
 	result.states_.insert(nfaStateNamesGen_.getNextAvailableName());
@@ -188,37 +186,6 @@ NFAFragment NFAFragment::createNFAForRange(const std::vector<char>& symbols)
 
 
 // compositional functions;
-//NFAFragment NFAFragment::makeConcatenation(const vector<NFAFragment>& fragments)
-//{
-//	NFAFragment result;
-//
-//	if (fragments.empty())
-//		return result;
-//
-//	for_each(fragments.begin(), fragments.end(), [&result](const NFAFragment& nfaFrag)
-//	{
-//		result.states_.insert(nfaFrag.states_.begin(), nfaFrag.states_.end());
-//	});
-//
-//	result.initStateName_ = fragments.begin()->initStateName_;
-//
-//	for_each(fragments.begin(), fragments.end(), [&result](const NFAFragment& nfaFrag)
-//	{
-//		result.transitions_.insert(nfaFrag.transitions_.begin(), nfaFrag.transitions_.end());
-//	});
-//
-//	for (int i = 0; i < fragments.size() - 1; i++)
-//	{
-//		result.transitions_[MoveFunctionArgument(fragments[i].outcomingHalfTrans_.fromStateName_, fragments[i].outcomingHalfTrans_.inputSymbol_)]
-//			.insert(fragments[i + 1].incomingHalfTrans_.toStateName_);
-//	}
-//
-//	result.incomingHalfTrans_ = fragments.front().incomingHalfTrans_;
-//	result.outcomingHalfTrans_ = fragments.back().outcomingHalfTrans_;
-//
-//	return result;
-//}
-//
 NFAFragment NFAFragment::makeParallel(vector<NFAFragment> fragments)
 {
 	if (fragments.empty())
@@ -248,69 +215,17 @@ NFAFragment NFAFragment::makeParallel(vector<NFAFragment> fragments)
 
 	result.outcomingHalfTrans_ = ending.outcomingHalfTrans_;
 
-	return move(result);
+	return result;
 }
-//
-//NFAFragment NFAFragment::makeStar(const NFAFragment& frag)
-//{
-//	NFAFragment result = NFAFragment::createNFAForEpsilon();
-//
-//	result.states_.insert(frag.states_.begin(), frag.states_.end());
-//	result.transitions_.insert(frag.transitions_.begin(), frag.transitions_.end());
-//
-//	result.transitions_[MoveFunctionArgument(result.outcomingHalfTrans_.fromStateName_, result.outcomingHalfTrans_.inputSymbol_)]
-//		.insert(frag.initStateName_);
-//
-//	result.transitions_[MoveFunctionArgument(frag.outcomingHalfTrans_.fromStateName_, frag.outcomingHalfTrans_.inputSymbol_)]
-//		.insert(result.incomingHalfTrans_.toStateName_);
-//
-//	return result;
-//}
-//
-//NFAFragment NFAFragment::makePlus(const NFAFragment& frag)
-//{
-//	
-//	NFAFragment ending = NFAFragment::createNFAForEpsilon();
-//	NFAFragment newFrag = NFAFragment::makeConcatenation({ frag, ending });
-//	
-//	NFAFragment result = NFAFragment::createNFAForEpsilon();
-//	
-//	result.states_.insert(newFrag.states_.begin(), newFrag.states_.end());
-//	result.transitions_.insert(newFrag.transitions_.begin(), newFrag.transitions_.end());
-//	
-//	result.transitions_[MoveFunctionArgument(newFrag.outcomingHalfTrans_.fromStateName_, newFrag.outcomingHalfTrans_.inputSymbol_)]
-//		.insert(result.incomingHalfTrans_.toStateName_);
-//	
-//	result.transitions_[MoveFunctionArgument(result.outcomingHalfTrans_.fromStateName_, result.outcomingHalfTrans_.inputSymbol_)]
-//		.insert(newFrag.initStateName_);
-//	
-//	result.outcomingHalfTrans_ = newFrag.outcomingHalfTrans_;
-//	
-//	return result;
-//}
-//
-//NFAFragment NFAFragment::addAcceptingState(const NFAFragment& frag, const string& stateName)
-//{ 
-//	State st(stateName, true);
-//
-//	NFAFragment result = frag;	
-//	result.states_.insert(st);
-//
-//	result.transitions_[MoveFunctionArgument(result.outcomingHalfTrans_.fromStateName_, result.outcomingHalfTrans_.inputSymbol_)]
-//		.insert(st.name_);
-//
-//	return result;
-//}
 
 
 
+// methods for converting NFA -> DFA;
 const string NFAFragment::getEpsilonClosure(const string& stateName/*, DfaNfaStatesMap& dfaNfaStatesMap*/) const
 {
 	set<MarkableStateName> resSet;
 	istringstream myStr(stateName);
 	copy(istream_iterator<string>(myStr), istream_iterator<string>(), inserter(resSet, resSet.begin()));
-
-	bool isStateAccepting = false;
 
 	auto msnIter = find_if(resSet.begin(), resSet.end(), [](const MarkableStateName& m) { return m.isMarked_ == false; });
 	while (msnIter != resSet.end())
@@ -390,9 +305,124 @@ NFAFragment::NFAFragment(NFAFragment&& frag) :
 	//cout << "NFAFragment::move-ctor\n";
 }
 
+//const DFA NFAFragment::convertToDFA() const
+//{
+//	DfaNfaStatesMap dfaNfaStatesMap;
+//
+//	set<char> externAlpha;
+//	for (auto& elem : this->transitions_)
+//	{
+//		char symbol = elem.first.inputSymbol_;
+//		if (symbol != '#')
+//		{
+//			externAlpha.insert(symbol);
+//		}
+//	}
+//
+//	DFA resultDfa;
+//
+//	string initDfaStateName = this->getEpsilonClosure({ this->initStateName_ });
+//
+//	istringstream myStr(initDfaStateName);
+//	string currStateName = "";
+//	string maxPriorityStateName = "";
+//	int maxPriority = 0;
+//
+//	while (myStr >> currStateName)
+//	{
+//		int currPriority = 0;
+//		if (!isStringInteger(currStateName) && (currPriority = (int)Token::getTypeByString(currStateName)) > maxPriority)
+//		{
+//			maxPriorityStateName = currStateName;
+//			maxPriority = currPriority;
+//		}
+//	}
+//
+//	string shortDfaStateName = "";
+//	if (maxPriority > 0)
+//	{
+//		shortDfaStateName = maxPriorityStateName;
+//		resultDfa.states_.insert(State(shortDfaStateName, true));
+//	}
+//	else
+//	{
+//		shortDfaStateName = dfaStateNamesGen_.getNextAvailableName();
+//		resultDfa.states_.insert(State(shortDfaStateName, false));
+//	}
+//
+//	dfaNfaStatesMap[shortDfaStateName] = initDfaStateName;
+//	
+//	resultDfa.initStateName_ = shortDfaStateName;
+//	
+//	set<MarkableStateName> markableDfaStates;
+//	markableDfaStates.insert(shortDfaStateName);
+//	
+//	auto msn = find_if(markableDfaStates.begin(), markableDfaStates.end(), [](const MarkableStateName& m) { return m.isMarked_ == false; });
+//
+//	while (msn != markableDfaStates.end())
+//	{
+//		for (const char& symbol : externAlpha)
+//		{
+//			string newDfaStateName = "";
+//			try
+//			{
+//				newDfaStateName = this->getEpsilonClosure(this->getReachableThroughS(dfaNfaStatesMap.at(msn->stateName_), symbol));
+//			}
+//			catch (exception ex)
+//			{
+//				cout << "HA-HA-HA-HA-HA\n";
+//			}
+//
+//			if (newDfaStateName != "")
+//			{
+//				if (dfaNfaStatesMap.)
+//				{
+//				}
+//				istringstream myNewStr(newDfaStateName);
+//				currStateName = "";
+//				maxPriorityStateName = "";
+//				maxPriority = 0;
+//				
+//				while (myNewStr >> currStateName)
+//				{
+//					int currPriority = 0;
+//					if (!isStringInteger(currStateName) && (currPriority = (int)Token::getTypeByString(currStateName)) > maxPriority)
+//					{
+//						maxPriorityStateName = currStateName;
+//						maxPriority = currPriority;
+//					}
+//				}
+//				
+//				if (maxPriority > 0)
+//				{
+//					shortDfaStateName = maxPriorityStateName;
+//					resultDfa.states_.insert(State(shortDfaStateName, true));
+//				}
+//				else
+//				{
+//					shortDfaStateName = dfaStateNamesGen_.getNextAvailableName();
+//					resultDfa.states_.insert(State(shortDfaStateName, false));
+//				}
+//
+//				//shortDfaStateName = dfaStateNamesGen_.getNextAvailableName();
+//				dfaNfaStatesMap[shortDfaStateName] = newDfaStateName;
+//
+//				markableDfaStates.insert(shortDfaStateName);
+//				//resultDfa.states_.insert(State(shortDfaStateName, newDfaState.isAccepting_));
+//				resultDfa.transitions_[MoveFunctionArgument(msn->stateName_, symbol)] = shortDfaStateName;
+//			}
+//		}
+//
+//		msn._Ptr->_Myval.isMarked_ = true;
+//		msn = find_if(markableDfaStates.begin(), markableDfaStates.end(), [](const MarkableStateName& m) { return m.isMarked_ == false; });
+//	}
+//
+//	return resultDfa; //~
+//}
+
 const DFA NFAFragment::convertToDFA() const
 {
-	DfaNfaStatesMap dfaNfaStatesMap;
+	NfaDfaStatesMap nfaDfaStatesMap;
 
 	set<char> externAlpha;
 	for (auto& elem : this->transitions_)
@@ -406,9 +436,9 @@ const DFA NFAFragment::convertToDFA() const
 
 	DFA resultDfa;
 
-	string initDfaStateName = this->getEpsilonClosure({ this->initStateName_ });
+	string initDfaStateFullName = this->getEpsilonClosure({ this->initStateName_ });
 
-	istringstream myStr(initDfaStateName);
+	istringstream myStr(initDfaStateFullName);
 	string currStateName = "";
 	string maxPriorityStateName = "";
 	int maxPriority = 0;
@@ -435,72 +465,77 @@ const DFA NFAFragment::convertToDFA() const
 		resultDfa.states_.insert(State(shortDfaStateName, false));
 	}
 
-	dfaNfaStatesMap[shortDfaStateName] = initDfaStateName;
-	
-	resultDfa.initStateName_ = shortDfaStateName;
-	
-	set<MarkableStateName> markableDfaStates;
-	markableDfaStates.insert(shortDfaStateName);
-	
-	auto msn = find_if(markableDfaStates.begin(), markableDfaStates.end(), [](const MarkableStateName& m) { return m.isMarked_ == false; });
+	nfaDfaStatesMap[initDfaStateFullName] = shortDfaStateName;
 
-	while (msn != markableDfaStates.end())
+	resultDfa.initStateName_ = shortDfaStateName;
+
+	set<MarkableStateName> markableDfaStateFullNames;
+	markableDfaStateFullNames.insert(initDfaStateFullName);
+
+	auto msn = find_if(markableDfaStateFullNames.begin(), markableDfaStateFullNames.end(), [](const MarkableStateName& m) { return m.isMarked_ == false; });
+
+	while (msn != markableDfaStateFullNames.end())
 	{
 		for (const char& symbol : externAlpha)
 		{
-			string newDfaStateName = "";
+			string newDfaStateFullName = "";
 			try
 			{
-				newDfaStateName = this->getEpsilonClosure(this->getReachableThroughS(dfaNfaStatesMap.at(msn->stateName_), symbol));
+				newDfaStateFullName = this->getEpsilonClosure(this->getReachableThroughS(msn->stateName_, symbol));
 			}
 			catch (exception ex)
 			{
 				cout << "HA-HA-HA-HA-HA\n";
 			}
 
-			if (newDfaStateName != "")
+			if (newDfaStateFullName != "")
 			{
-				istringstream myNewStr(newDfaStateName);
-				currStateName = "";
-				maxPriorityStateName = "";
-				maxPriority = 0;
-				
-				while (myNewStr >> currStateName)
+				auto existingStateNameIter = nfaDfaStatesMap.find(newDfaStateFullName);
+				if (existingStateNameIter == nfaDfaStatesMap.end())
 				{
-					int currPriority = 0;
-					if (!isStringInteger(currStateName) && (currPriority = (int)Token::getTypeByString(currStateName)) > maxPriority)
+					istringstream myNewStr(newDfaStateFullName);
+					currStateName = "";
+					maxPriorityStateName = "";
+					maxPriority = 0;
+
+					while (myNewStr >> currStateName)
 					{
-						maxPriorityStateName = currStateName;
-						maxPriority = currPriority;
+						int currPriority = 0;
+						if (!isStringInteger(currStateName) && (currPriority = (int)Token::getTypeByString(currStateName)) > maxPriority)
+						{
+							maxPriorityStateName = currStateName;
+							maxPriority = currPriority;
+						}
 					}
-				}
-				
-				if (maxPriority > 0)
-				{
-					shortDfaStateName = maxPriorityStateName;
-					resultDfa.states_.insert(State(shortDfaStateName, true));
-				}
-				else
-				{
-					shortDfaStateName = dfaStateNamesGen_.getNextAvailableName();
-					resultDfa.states_.insert(State(shortDfaStateName, false));
+
+					if (maxPriority > 0)
+					{
+						shortDfaStateName = maxPriorityStateName;
+						resultDfa.states_.insert(State(shortDfaStateName, true));
+					}
+					else
+					{
+						shortDfaStateName = dfaStateNamesGen_.getNextAvailableName();
+						resultDfa.states_.insert(State(shortDfaStateName, false));
+					}
+
+					nfaDfaStatesMap[newDfaStateFullName] = shortDfaStateName;
+					markableDfaStateFullNames.insert(newDfaStateFullName);
 				}
 
-				//shortDfaStateName = dfaStateNamesGen_.getNextAvailableName();
-				dfaNfaStatesMap[shortDfaStateName] = newDfaStateName;
-
-				markableDfaStates.insert(shortDfaStateName);
-				//resultDfa.states_.insert(State(shortDfaStateName, newDfaState.isAccepting_));
-				resultDfa.transitions_[MoveFunctionArgument(msn->stateName_, symbol)] = shortDfaStateName;
+				resultDfa.transitions_[MoveFunctionArgument(nfaDfaStatesMap[msn->stateName_], symbol)] = nfaDfaStatesMap[newDfaStateFullName];
 			}
 		}
-
+		 // ----------;
 		msn._Ptr->_Myval.isMarked_ = true;
-		msn = find_if(markableDfaStates.begin(), markableDfaStates.end(), [](const MarkableStateName& m) { return m.isMarked_ == false; });
+		msn = find_if(markableDfaStateFullNames.begin(), markableDfaStateFullNames.end(), 
+			[](const MarkableStateName& m) { return m.isMarked_ == false; });
 	}
 
 	return resultDfa; //~
 }
+
+
 
 
 

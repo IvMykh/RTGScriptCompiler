@@ -57,11 +57,7 @@ public:
 	static NFAFragment createNFAForRange(const char first, const char last); // [first, last];
 	static NFAFragment createNFAForRange(const std::vector<char>& symbols);
 
-	//static NFAFragment makeConcatenation(const std::vector<NFAFragment>& fragments);
 	static NFAFragment makeParallel(std::vector<NFAFragment> fragments);
-	//static NFAFragment makeStar(const NFAFragment& frag);
-	//static NFAFragment makePlus(const NFAFragment& frag);
-	//static NFAFragment addAcceptingState(const NFAFragment& frag, const std::string& stateName);
 
 
 private:
@@ -70,7 +66,7 @@ private:
 	std::map<MoveFunctionArgument, std::set<std::string> > transitions_;
 
 private:
-	typedef std::map<std::string, std::string> DfaNfaStatesMap;
+	typedef std::map<std::string, std::string> NfaDfaStatesMap;
 
 	const std::string getEpsilonClosure(const std::string& stateName/*, DfaNfaStatesMap& dfaNfaStatesMap*/) const;
 	const std::string getReachableThroughS(const std::string& stateName, const char S/*, DfaNfaStatesMap& dfaNfaStatesMap*/) const;
