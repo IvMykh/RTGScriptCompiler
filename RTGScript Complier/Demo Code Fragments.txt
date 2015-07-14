@@ -1,0 +1,236 @@
+cout << "*** NFAFragment demo ***" << '\n';
+
+	// first NFA (for 1^n01);
+	ifstream ffile("FirstNFA.txt");
+	if (!ffile)
+	{
+		cout << "First File does not exist" << '\n';
+		return;
+	}
+
+	NFAFragment firstFrag;
+	ffile >> firstFrag;
+
+	cout << "--------------------------------------------------------\n";
+	cout << firstFrag << '\n';
+
+	// second NFA (for 10^n1);
+	ifstream sfile("SecondNFA.txt");
+	if (!sfile)
+	{
+		cout << "Second File does not exist" << '\n';
+		return;
+	}
+
+	NFAFragment secondFrag;
+	sfile >> secondFrag;
+
+	cout << "\n\n\n--------------------------------------------------------\n";
+	cout << secondFrag << '\n';
+
+	cout << "\n\n\n--------------------------------------------------------\n";
+	cout << NFAFragment::makeConcatenation(firstFrag, secondFrag) << '\n';
+ 
+	//---------------------------------------------------------------------;
+	cout << "\n\n\n\*** DFA demo ***" << '\n';
+
+	// DFA for 10^n1;
+	ifstream tfile("DFA.txt");
+	if (!tfile)
+	{
+		cout << "Third File does not exist" << '\n';
+		return;
+	}
+
+	DFA dfa;
+	tfile >> dfa;
+	
+	cout << dfa << '\n';
+	
+	string str = "01011011";
+
+	cout << "Accepts string \"" << str << "\"? " << boolalpha << dfa.acceptsString(str) << '\n';
+
+
+	// operations checking;
+	auto i = NFAFragment::createNFAForSingleSymbol('i');
+	auto f = NFAFragment::createNFAForSingleSymbol('f');
+	auto k = NFAFragment::createNFAForSingleSymbol('k');
+	
+	auto concat = NFAFragment::makeParallel({ i, f, k});
+	
+	cout << concat << '\n';
+
+	auto nfaForStruct = NFAFragment::createNFAForString("struct");
+	auto nfaForIf = NFAFragment::createNFAForString("if");
+	auto nfaForClass = NFAFragment::createNFAForString("class");
+	
+	cout << "For \"struct\":\n"
+		<< nfaForStruct;
+	
+	cout << "\n\nFor \"if\":\n"
+		<< nfaForIf;
+	
+	cout << "\n\nFor \"class\":\n"
+		<< nfaForClass;
+	
+	auto parallel = NFAFragment::makeParallel({ nfaForStruct, nfaForIf, nfaForClass });
+	
+	cout << "*** Parallel***" << parallel << '\n';
+
+
+	auto nfa = NFAFragment::createNFAForSingleSymbol('a');
+	cout << "NFA is :\n"
+		<< nfa << '\n';
+	
+	auto plusNfa = NFAFragment::makePlus(nfa);
+	cout << "PlusNfa is :\n" 
+		<< plusNfa << '\n';
+
+
+// DFA demo;
+string fileName = "DemoNFA.txt";
+	ifstream fileStream(fileName);
+	
+	if (!fileStream)
+	{
+		cout << "Cannot open file \"" << fileName << "\"!\n";
+	}
+	
+	NFAFragment nfa;
+	fileStream >> nfa;
+	
+	cout << nfa << '\n';
+	
+
+	auto dfa = nfa.convertToDFA();
+
+	cout << "\n\n***Trying for accepting:***\n";
+
+	string regex = "aabbababaac";
+	cout << "\nAccepts " << regex << "? " << boolalpha << dfa.acceptsString(regex) << '\n';
+
+	regex = "ac";
+	cout << "\nAccepts " << regex << "? " << boolalpha << dfa.acceptsString(regex) << '\n';
+
+	regex = "bac";
+	cout << "\nAccepts " << regex << "? " << boolalpha << dfa.acceptsString(regex) << '\n';
+
+	regex = "aaaaaaaaac";
+	cout << "\nAccepts " << regex << "? " << boolalpha << dfa.acceptsString(regex) << '\n';
+
+	regex = "abac";
+	cout << "\nAccepts " << regex << "? " << boolalpha << dfa.acceptsString(regex) << '\n';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// testing result dfa;
+	clock_t tStart = clock();
+	Lexer l;
+	cout << "Execution time is " << (double)(clock() - tStart) / CLOCKS_PER_SEC;
+	
+	ofstream file("RESULTDFA.txt");
+	file << l.dfa_ << '\n';
+	
+	cout << boolalpha << l.dfa_.acceptsString("if");
+	cout << boolalpha << l.dfa_.acceptsString("else");
+	cout << boolalpha << l.dfa_.acceptsString("+");
+	cout << boolalpha << l.dfa_.acceptsString("(");
+	cout << boolalpha << l.dfa_.acceptsString("_12s13sd_8");
+	cout << boolalpha << l.dfa_.acceptsString("-.9");
+	cout << boolalpha << l.dfa_.acceptsString("15");
+	cout << boolalpha << l.dfa_.acceptsString("-3");
+	
+	cout << '\n' << boolalpha << l.dfa_.acceptsString("&");
+
+	//NFAFragment nfaForIntegerLiteral =
+	//	NFAFragment::createNFAForRange('0', '9')
+	//	.makePlus()
+	//	.addAcceptingState("IntegerLiteral");
+	//
+	//DFA dfa = nfaForIntegerLiteral.convertToDFA();
+	//
+	//cout << "DFA:\n"
+	//	<< dfa << '\n';
+	//
+	//string str = "003151351";
+	//cout << "\nAccepts " << str << "? " << boolalpha << dfa.acceptsString(str) << '\n';
+	//
+	//str = "";
+	//cout << "\nAccepts " << str << "? " << boolalpha << dfa.acceptsString(str) << '\n';
+	//
+	//str = "7813";
+	//cout << "\nAccepts " << str << "? " << boolalpha << dfa.acceptsString(str) << '\n';
+	//
+	//str = "11111111111111";
+	//cout << "\nAccepts " << str << "? " << boolalpha << dfa.acceptsString(str) << '\n';
+
+
+	// nfa for real literal;
+	// [+-]?([0-9]+.[0-9]*|.[0-9]+)
+	//NFAFragment nfaForPlusMinus =
+	//	NFAFragment::createNFAForRange({ '+', '-' })
+	//	.makeQuestionMark();
+	//
+	//NFAFragment nfaForfirstForm =
+	//	NFAFragment::createNFAForRange('0', '9')
+	//	.makePlus()
+	//	.makeConcatenation(NFAFragment::createNFAForSingleSymbol('.'))
+	//	.makeConcatenation(NFAFragment::createNFAForRange('0', '9').makeStar());
+	//
+	//NFAFragment nfaForSecondForm =
+	//	NFAFragment::createNFAForSingleSymbol('.')
+	//	.makeConcatenation(NFAFragment::createNFAForRange('0', '9').makePlus());
+	//
+	//NFAFragment nfaForRealLiteral =
+	//	nfaForPlusMinus
+	//	.makeConcatenation(NFAFragment::makeParallel({ nfaForfirstForm, nfaForSecondForm }))
+	//	.addAcceptingState("RealLiteral");
+	//
+	//
+	//DFA dfa = nfaForRealLiteral.convertToDFA();
+	//
+	//
+	//string str = ".0";
+	//cout << "\nAccepts \"" << str << "\"? " << boolalpha << dfa.acceptsString(str) << '\n';
+	//
+	//str = "0.";
+	//cout << "\nAccepts \"" << str << "\"? " << boolalpha << dfa.acceptsString(str) << '\n';
+	//
+	//str = "12.8";
+	//cout << "\nAccepts \"" << str << "\"? " << boolalpha << dfa.acceptsString(str) << '\n';
+	//
+	//str = "-12.8";
+	//cout << "\nAccepts \"" << str << "\"? " << boolalpha << dfa.acceptsString(str) << '\n';
+	//
+	//str = "+12.8";
+	//cout << "\nAccepts \"" << str << "\"? " << boolalpha << dfa.acceptsString(str) << '\n';
+	//
+	//str = "-.9";
+	//cout << "\nAccepts \"" << str << "\"? " << boolalpha << dfa.acceptsString(str) << '\n';
+	//
+	//str = "+8.";
+	//cout << "\nAccepts \"" << str << "\"? " << boolalpha << dfa.acceptsString(str) << '\n';
+	//
+	//
+	//
+	//
+	//str = "+8";
+	//cout << "\nAccepts \"" << str << "\"? " << boolalpha << dfa.acceptsString(str) << '\n';
+	//
+	//str = "-99";
+	//cout << "\nAccepts \"" << str << "\"? " << boolalpha << dfa.acceptsString(str) << '\n';
+	//
+	//str = "-a";
+	//cout << "\nAccepts \"" << str << "\"? " << boolalpha << dfa.acceptsString(str) << '\n';
