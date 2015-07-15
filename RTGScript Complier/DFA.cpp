@@ -1,4 +1,5 @@
 #include "DFA.h"
+#include "Token.h"
 
 #include <algorithm>
 #include <sstream>
@@ -47,6 +48,88 @@ bool DFA::acceptsString(const string& inputString) const
 		return iter->isAccepting_;
 	else
 		throw exception("Current state is not present in state alphabet!");
+}
+
+vector<Token*> DFA::tokenize(const std::string& inputString) const
+{
+	vector<Token*> tokens;
+
+	istringstream myStream(inputString);
+	string currReadStr = "";
+
+	while (myStream >> currReadStr)
+	{
+		const string* lastAcceptingStateName = nullptr;
+		const string* currStateName = &this->initStateName_;
+		int currTokenLength = 0;
+		int charsAfterlastAccepting = 0;
+		int startPos = 0;
+
+		MoveFunctionArgument arg;
+		for (int i = 0; i < currReadStr.length(); ++i)
+		{
+			arg.fromStateName_ = *currStateName;
+			arg.inputSymbol_ = currReadStr[i];
+
+			try
+			{
+				currStateName = &this->transitions_.at(arg);
+
+				bool isCurrStateAccepting = any_of(this->states_.begin(), this->states_.end(),
+					[&currStateName](const State& st)
+				{
+					return st.isAccepting_ && st.name_ == *currStateName;
+				});
+
+				if (isCurrStateAccepting)
+				{
+					lastAcceptingStateName = currStateName;
+					charsAfterlastAccepting = 0;
+				}
+				else
+				{
+					++charsAfterlastAccepting;
+				}
+
+				++currTokenLength;
+			}
+			catch (out_of_range ex)
+			{
+				if (lastAcceptingStateName == nullptr)
+				{
+					string message = "Lexical error: word \"" + currReadStr.substr(startPos, currReadStr.length()) + "\"";
+					throw exception(message.c_str());
+				}
+
+				int realTokenLen = currTokenLength - charsAfterlastAccepting;
+				tokens.push_back(Token::createToken(this->stateNameAcceptingTokens_.at(*lastAcceptingStateName), currReadStr.substr(startPos, realTokenLen)));
+				
+				startPos = startPos + realTokenLen;
+				currTokenLength = 0;
+
+				i -= (charsAfterlastAccepting + 1);
+
+				lastAcceptingStateName = nullptr;
+				currStateName = &this->initStateName_;
+			}
+
+			if (i == (currReadStr.length() - 1))
+			{
+				if (lastAcceptingStateName == nullptr)
+				{
+					string message = "Lexical error: word \"" + currReadStr.substr(startPos, currReadStr.length()) + "\"";
+					throw exception(message.c_str());
+				}
+
+				int realTokenLen = currTokenLength - charsAfterlastAccepting;
+				tokens.push_back(Token::createToken(this->stateNameAcceptingTokens_.at(*lastAcceptingStateName), currReadStr.substr(startPos, realTokenLen)));
+
+				break;
+			}
+		}
+	}
+
+	return tokens;
 }
 
 DFA& DFA::operator=(DFA&& dfa)

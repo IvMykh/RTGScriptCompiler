@@ -1,6 +1,10 @@
 #pragma once
 #include "FiniteAutomaton.h"
 
+#include <vector>
+
+class Token;
+
 class DFA
 	:public FiniteAutomaton
 {
@@ -13,6 +17,8 @@ public:
 	DFA(DFA&& dfa);
 
 	bool acceptsString(const std::string& inputString) const;
+
+	std::vector<Token*> tokenize(const std::string& inputString) const;
 
 	DFA& operator=(DFA&& dfa);
 

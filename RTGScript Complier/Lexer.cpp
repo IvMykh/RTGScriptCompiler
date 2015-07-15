@@ -14,11 +14,11 @@ Lexer::Lexer()
 	else
 	struct
 	*/
-	allFrags.push_back(NFAFragment::createNFAForString("if").addAcceptingState("Keyword"));
-	allFrags.push_back(NFAFragment::createNFAForString("else").addAcceptingState("Keyword"));
-	allFrags.push_back(NFAFragment::createNFAForString("and").addAcceptingState("Keyword"));
-	allFrags.push_back(NFAFragment::createNFAForString("or").addAcceptingState("Keyword"));
-	allFrags.push_back(NFAFragment::createNFAForString("struct").addAcceptingState("Keyword"));
+	allFrags.push_back(NFAFragment::createNFAForString("if").addAcceptingState(Token::Type::Keyword));
+	allFrags.push_back(NFAFragment::createNFAForString("else").addAcceptingState(Token::Type::Keyword));
+	allFrags.push_back(NFAFragment::createNFAForString("and").addAcceptingState(Token::Type::Keyword));
+	allFrags.push_back(NFAFragment::createNFAForString("or").addAcceptingState(Token::Type::Keyword));
+	allFrags.push_back(NFAFragment::createNFAForString("struct").addAcceptingState(Token::Type::Keyword));
 
 
 
@@ -34,7 +34,7 @@ Lexer::Lexer()
 		.makeConcatenation(
 		NFAFragment::makeParallel({ nfaForaToz, nfaForAToZ, nfaForUnderscore, nfaFor0To9 }).makeStar()
 		)
-		.addAcceptingState("Identifier");
+		.addAcceptingState(Token::Type::Identifier);
 	
 	allFrags.push_back(nfaForIDs);
 
@@ -47,7 +47,7 @@ Lexer::Lexer()
 		.makeQuestionMark()
 		.makeConcatenation(NFAFragment::createNFAForRange('0', '9')
 		.makePlus())
-		.addAcceptingState("IntegerLiteral");
+		.addAcceptingState(Token::Type::IntegerLiteral);
 
 	allFrags.push_back(nfaForIntegerLiteral);
 
@@ -72,7 +72,7 @@ Lexer::Lexer()
 	NFAFragment nfaForRealLiteral =
 		nfaForPlusMinus
 		.makeConcatenation(NFAFragment::makeParallel({ nfaForfirstForm, nfaForSecondForm }))
-		.addAcceptingState("RealLiteral");
+		.addAcceptingState(Token::Type::RealLiteral);
 
 	allFrags.push_back(nfaForRealLiteral);
 
@@ -85,13 +85,23 @@ Lexer::Lexer()
 		/
 		(
 		)
+		=
+		==
+		!=
+		<
+		>
 	*/
-	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('+').addAcceptingState("Operator"));
-	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('-').addAcceptingState("Operator"));
-	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('*').addAcceptingState("Operator"));
-	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('/').addAcceptingState("Operator"));
-	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('(').addAcceptingState("Operator"));
-	allFrags.push_back(NFAFragment::createNFAForSingleSymbol(')').addAcceptingState("Operator"));
+	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('+').addAcceptingState(Token::Type::Operator));
+	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('-').addAcceptingState(Token::Type::Operator));
+	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('*').addAcceptingState(Token::Type::Operator));
+	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('/').addAcceptingState(Token::Type::Operator));
+	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('(').addAcceptingState(Token::Type::Operator));
+	allFrags.push_back(NFAFragment::createNFAForSingleSymbol(')').addAcceptingState(Token::Type::Operator));
+	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('=').addAcceptingState(Token::Type::Operator));
+	allFrags.push_back(NFAFragment::createNFAForString("==").addAcceptingState(Token::Type::Operator));
+	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('<').addAcceptingState(Token::Type::Operator));
+	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('>').addAcceptingState(Token::Type::Operator));
+	allFrags.push_back(NFAFragment::createNFAForString("!=").addAcceptingState(Token::Type::Operator));
 
 	dfa_ = NFAFragment::makeParallel(allFrags).convertToDFA();
 }

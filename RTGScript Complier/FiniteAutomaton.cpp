@@ -1,26 +1,39 @@
 #include "FiniteAutomaton.h"
 
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 
 FiniteAutomaton::FiniteAutomaton() :
 	states_(),
-	initStateName_()
+	initStateName_(),
+	stateNameAcceptingTokens_()
 {
 }
 
 FiniteAutomaton::FiniteAutomaton(const FiniteAutomaton& fa):
 	states_(fa.states_),
-	initStateName_(fa.initStateName_)
+	initStateName_(fa.initStateName_),
+	stateNameAcceptingTokens_(fa.stateNameAcceptingTokens_)
 {
 }
 
 FiniteAutomaton::FiniteAutomaton(FiniteAutomaton&& fa) :
 	states_(move(fa.states_)),
-	initStateName_(move(fa.initStateName_))
+	initStateName_(move(fa.initStateName_)),
+	stateNameAcceptingTokens_(move(fa.stateNameAcceptingTokens_))
 {
 	//cout << "FiniteAutomaton::move-ctor\n";
+}
+
+bool FiniteAutomaton::isStateAccepting(const std::string& stateName) const
+{
+	return (find_if(this->states_.begin(), this->states_.end(),
+		[&stateName](const State& st)
+	{
+		return st.isAccepting_ && st.name_ == stateName;
+	}) != this->states_.end());
 }
 
 FiniteAutomaton::~FiniteAutomaton()
@@ -33,6 +46,7 @@ FiniteAutomaton& FiniteAutomaton::operator = (FiniteAutomaton&& fa)
 	{
 		this->states_ = move(fa.states_);
 		this->initStateName_ = move(fa.initStateName_);
+		this->stateNameAcceptingTokens_ = move(fa.stateNameAcceptingTokens_);
 
 		//cout << "FiniteAutomaton::move-assign\n";
 	}
@@ -45,6 +59,7 @@ FiniteAutomaton& FiniteAutomaton::operator = (const FiniteAutomaton& fa)
 	{
 		this->states_ = fa.states_;
 		this->initStateName_ = fa.initStateName_;
+		this->stateNameAcceptingTokens_ = fa.stateNameAcceptingTokens_;
 	}
 	return *this;
 }

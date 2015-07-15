@@ -30,11 +30,12 @@ public:
 	Token(const Type tokenType);
 
 	const Type getTokenType() const;
+	const std::string getTokenTypeString() const;
 
 	virtual ~Token() = 0;
 
 	// statics:
-	static Token* createToken(const std::string& tokenTypeStr, const std::string& valueStr);
+	static Token* createToken(const Type tokenType, const std::string& valueStr);
 	static Type getTypeByString(const std::string& tokenString);
 };
 
@@ -47,6 +48,9 @@ class KeywordToken
 
 	std::string value_;
 	KeywordToken(const Type tokenType, const std::string valueStr);
+
+public:
+	const std::string& getValue() const;
 };
 
 
@@ -58,6 +62,9 @@ class IdentifierToken
 
 	std::string value_;
 	IdentifierToken(const Type tokenType, const std::string valueStr);
+
+public:
+	const std::string& getValue() const;
 };
 
 
@@ -69,6 +76,9 @@ class IntegerLiteralToken
 
 	int value_;
 	IntegerLiteralToken(const Type tokenType, const std::string valueStr);
+
+public:
+	const int getValue() const;
 };
 
 
@@ -80,6 +90,9 @@ class RealLiteralToken
 
 	float value_;
 	RealLiteralToken(const Type tokenType, const std::string valueStr);
+
+public:
+	const float getValue() const;
 };
 
 
@@ -91,4 +104,7 @@ class OperatorToken
 
 	std::string value_;
 	OperatorToken(const Type tokenType, const std::string valueStr);
+
+public:
+	const std::string& getValue() const;
 };

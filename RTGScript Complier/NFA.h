@@ -57,7 +57,7 @@ public:
 	static NFAFragment createNFAForRange(const char first, const char last); // [first, last];
 	static NFAFragment createNFAForRange(const std::vector<char>& symbols);
 
-	static NFAFragment makeParallel(std::vector<NFAFragment> fragments);
+	static NFAFragment makeParallel(std::vector<NFAFragment> frags);
 
 
 private:
@@ -70,10 +70,12 @@ private:
 
 	const std::string getEpsilonClosure(const std::string& stateName/*, DfaNfaStatesMap& dfaNfaStatesMap*/) const;
 	const std::string getReachableThroughS(const std::string& stateName, const char S/*, DfaNfaStatesMap& dfaNfaStatesMap*/) const;
+	const std::set<char> getExternalAlphabet() const;
 
 public:
 
 	NFAFragment();
+	NFAFragment(const NFAFragment& frag);
 	NFAFragment(NFAFragment&& frag);
 
 	const DFA convertToDFA() const;
@@ -84,7 +86,7 @@ public:
 	NFAFragment& makeStar(); // +
 	NFAFragment& makePlus(); // +
 	NFAFragment& makeQuestionMark();
-	NFAFragment& addAcceptingState(const std::string& stateName); // +
+	NFAFragment& addAcceptingState(const Token::Type acceptingTokenType); // +
 
 	NFAFragment& operator=(NFAFragment&& frag);
 

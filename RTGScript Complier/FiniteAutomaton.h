@@ -4,6 +4,7 @@
 #include <map>
 
 #include "UtilityClasses.h"
+#include "Token.h"
 
 class FiniteAutomaton
 {
@@ -12,10 +13,14 @@ protected:
 	std::set<State> states_;
 	std::string initStateName_;
 
+	std::map<std::string, Token::Type> stateNameAcceptingTokens_;
+
 public:
 	FiniteAutomaton();
 	FiniteAutomaton(const FiniteAutomaton& fa);
 	FiniteAutomaton(FiniteAutomaton&& fa);
+
+	bool isStateAccepting(const std::string& stateName) const;
 
 	virtual ~FiniteAutomaton() = 0;
 
