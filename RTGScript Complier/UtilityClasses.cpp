@@ -16,6 +16,17 @@ State::State(State&& st) :
 	//cout << "State::move-ctor\n";
 }
 
+State& State::operator=(const State& st)
+{
+	if (&st != this)
+	{
+		this->name_ = st.name_;
+		this->isAccepting_ = st.isAccepting_;
+	}
+
+	return *this;
+}
+
 State& State::operator=(State&& st)
 {
 	if (&st != this)

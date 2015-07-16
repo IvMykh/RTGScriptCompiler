@@ -6,11 +6,15 @@
 
 class Lexer
 {
-public:
+private:
 	DFA dfa_;
 
 public:
 	Lexer();
+	Lexer(const std::string& fileName);
+
+	std::vector<Token*> tokenize(const std::string& inputString) const;
+
 	~Lexer();
 };
 

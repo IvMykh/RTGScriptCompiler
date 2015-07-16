@@ -1,0 +1,41 @@
+in[2].x = 2;
+uint somevar = +5;
+float fl = -.9;
+bool b1 = true;
+bool b2 = false;
+
+if(b1 && b2)
+{
+	out.green = fl;
+}
+
+if(b1 || b2)
+{
+	out.red = fl;
+}
+
+if(b1!=b2)
+{
+	out.blue=fl;
+}
+
+if(b1 and b2)
+{
+	out.blue=fl;
+}
+
+if(b1==b2)
+{
+	out.blue=fl;
+}
+
+if(!b2)
+{
+	out.green = fl;
+}
+else
+{
+	out[2].y =-2.;
+}
+
+uint u = -(2+8 / 9-4);

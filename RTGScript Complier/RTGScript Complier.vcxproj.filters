@@ -58,24 +58,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Demo Code Fragments.txt">
+    <Text Include="User code.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="DFA.txt">
+    <Text Include="RESULTDFA.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="FirstNFA.txt">
+    <Text Include="Lexer output.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="SecondNFA.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="DemoNFA.txt">
+    <Text Include="Serialized result DFA.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

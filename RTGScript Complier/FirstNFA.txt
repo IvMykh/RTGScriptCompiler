@@ -1,9 +1,0 @@
-Non-accepting_states: s0 s1
-Accepting_states: s2
-Initial_state:	s0
-Incoming_half-transition: s0
-Outcoming_half-transition: s2 #
-Transitions:
-s0 1 -> s0 s1
-s0 0 -> s1 s2
-s1 1 -> s2 

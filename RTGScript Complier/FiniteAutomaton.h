@@ -27,6 +27,10 @@ public:
 	FiniteAutomaton& operator=(FiniteAutomaton&& fa);
 	FiniteAutomaton& operator=(const FiniteAutomaton& fa);
 
+
+	virtual void serialize(std::ostream& os) const;
+	virtual void deserialize(std::istream& is);
+
 	friend std::istream& operator>>(std::istream& is, FiniteAutomaton& fa);
 	friend std::ostream& operator<<(std::ostream& os, const FiniteAutomaton& fa);
 };

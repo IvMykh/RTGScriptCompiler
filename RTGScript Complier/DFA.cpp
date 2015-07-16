@@ -1,11 +1,20 @@
 #include "DFA.h"
 #include "Token.h"
 
-#include <algorithm>
 #include <sstream>
+#include <fstream>
+
+#include <algorithm>
 
 using namespace std;
 
+// class LexicalErrorException definition;
+LexicalErrorException::LexicalErrorException(const char* msg) :
+	exception(msg)
+{
+}
+
+// class DFA definition;
 DFA::DFA() :
 	FiniteAutomaton(),
 	transitions_()
@@ -118,7 +127,7 @@ vector<Token*> DFA::tokenize(const std::string& inputString) const
 				if (lastAcceptingStateName == nullptr)
 				{
 					string message = "Lexical error: word \"" + currReadStr.substr(startPos, currReadStr.length()) + "\"";
-					throw exception(message.c_str());
+					throw LexicalErrorException(message.c_str());
 				}
 
 				int realTokenLen = currTokenLength - charsAfterlastAccepting;
@@ -144,6 +153,54 @@ DFA& DFA::operator=(DFA&& dfa)
 
 	return *this;
 }
+
+
+
+void DFA::serialize(ostream& os) const
+{
+	/* File format:
+	first line:		non-accepting state names;
+	second line:	accepting state names (<state name> <accepting token value>);
+	third line:		initial state name;
+
+	further lines: transitions (<from-state name> <input symbol> <to-state name>);
+	*/
+
+	FiniteAutomaton::serialize(os);
+
+	for (auto transition : this->transitions_)
+	{
+		os << transition.first.fromStateName_ << ' ' << transition.first.inputSymbol_ << ' ' << transition.second << '\n';
+	}
+}
+
+void DFA::deserialize(istream& is)
+{
+	/* File format:
+	first line:		non-accepting state names;
+	second line:	accepting state names (<state name> <accepting token value>);
+	third line:		initial state name;
+
+	further lines: transitions (<from-state name> <input symbol> <to-state name>);
+	*/
+
+	this->transitions_.clear();
+
+	FiniteAutomaton::deserialize(is);
+
+	// reading transitions;
+	string fromStateName = "";
+	char inputSymbool = '\0';
+	string toStateName = "";
+	
+	while (!is.eof())
+	{
+		is >> fromStateName >> inputSymbool >> toStateName;
+		this->transitions_[MoveFunctionArgument(fromStateName, inputSymbool)] = toStateName;
+	}
+}
+
+
 
 ostream& operator<<(ostream& os, const DFA& dfa)
 {

@@ -1,6 +1,8 @@
 #include "FiniteAutomaton.h"
 
+#include <fstream>
 #include <sstream>
+
 #include <algorithm>
 
 using namespace std;
@@ -62,6 +64,81 @@ FiniteAutomaton& FiniteAutomaton::operator = (const FiniteAutomaton& fa)
 		this->stateNameAcceptingTokens_ = fa.stateNameAcceptingTokens_;
 	}
 	return *this;
+}
+
+void FiniteAutomaton::serialize(ostream& os) const
+{
+	/* File format:
+		first line:		non-accepting state names;
+		second line:	accepting state names (<state name> <accepting token value>);
+		third line:		initial state name;
+		
+		further lines: transitions (<from-state name> <input symbol> <to-state name>);
+	*/
+
+	for_each(this->states_.begin(), this->states_.end(),
+		[&os](const State& state)
+	{
+		if (!state.isAccepting_)
+		{
+			os << state.name_ << ' ';
+		}
+	});
+	os << '\n';
+
+	for_each(this->states_.begin(), this->states_.end(),
+		[&os, this](const State& state)
+	{
+		if (state.isAccepting_)
+		{
+			os << state.name_ << ' ' << (int)this->stateNameAcceptingTokens_.at(state.name_) << '\t';
+		}
+	});
+	os << '\n';
+
+	os << this->initStateName_ << '\n';
+}
+
+void FiniteAutomaton::deserialize(istream& is)
+{
+	/* File format:
+	first line:		non-accepting state names;
+	second line:	accepting state names (<state name> <accepting token value>);
+	third line:		initial state name;
+
+	further lines: transitions (<from-state name> <input symbol> <to-state name>);
+	*/
+
+	this->states_.clear();
+	this->initStateName_.clear();
+	this->stateNameAcceptingTokens_.clear();
+
+	string line = "";
+	getline(is, line);
+
+	// reading non-accepting state names;
+	istringstream myStream(line);
+	copy(istream_iterator<string>(myStream), istream_iterator<string>(), inserter(this->states_, this->states_.begin()));
+
+	getline(is, line);
+
+	myStream.clear();
+	myStream.str(line);
+
+	// reading accepting state names;
+	string stateName = "";
+	int tokenTypeValue = 0;
+
+	while (!myStream.eof())
+	{
+		myStream >> stateName >> tokenTypeValue;
+
+		this->states_.insert(State(stateName, true));
+		this->stateNameAcceptingTokens_[stateName] = (Token::Type)tokenTypeValue;
+	}
+
+	// reading initial state name;
+	is >> this->initStateName_;
 }
 
 istream& operator>>(istream& is, FiniteAutomaton& fa)

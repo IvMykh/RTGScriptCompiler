@@ -13,6 +13,7 @@ struct State
 
 	bool operator<(const State& other) const;
 	
+	State& operator=(const State& st);
 	State& operator=(State&& st);
 
 	friend std::ostream& operator<<(std::ostream& os, const State& st);
