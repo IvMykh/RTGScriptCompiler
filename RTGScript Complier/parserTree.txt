@@ -1,0 +1,85 @@
+
+Block
+    Declaration 'circle' of type 2D
+      qualifier:
+        IN Qualifier
+            IntegerLiteral 0
+    Declaration 'triangle' of type 2D
+      qualifier:
+        IN Qualifier
+            IntegerLiteral 1
+    Declaration 'mix' of type 2D
+      qualifier:
+        OUT Qualifier
+            IntegerLiteral 0
+    Declaration 'a' of type int
+      qualifier:
+    Declaration 'b' of type float
+    Assignement '
+      to:
+        Variable 'b'
+      from:
+        Operator '+'
+          operand1:
+            IntegerLiteral 2
+          operand2:
+            Operator '-'
+              operand1:
+                Operator '*'
+                  operand1:
+                    IntegerLiteral 5
+                  operand2:
+                    Operator '-'
+                      operand1:
+                        IntegerLiteral 7
+                      operand2:
+                        IntegerLiteral 3
+              operand2:
+                Variable 'a'
+    Definition 'c' of type -842150451
+      initialization:
+        Operator '+'
+          operand1:
+            IntegerLiteral 4
+          operand2:
+            Variable 'b'
+    IF+ELSE statement '
+      condition:
+        Operator '<'
+          operand1:
+            Variable 'x'
+          operand2:
+            RealLiteral 0.5
+      on TRUE:
+        Assignement '
+          to:
+            Variable 'mix'
+          from:
+            Tex2DVariable 'circle'
+              xIndex:
+                Operator '*'
+                  operand1:
+                    Variable 'x'
+                  operand2:
+                    IntegerLiteral 2
+              yIndex:
+                Variable 'y'
+      on FALSE:
+        Block
+            Assignement '
+              to:
+                Variable 'mix'
+              from:
+                Tex2DVariable 'triangle'
+                  xIndex:
+                    Operator '-'
+                      operand1:
+                        Operator '*'
+                          operand1:
+                            Variable 'x'
+                          operand2:
+                            IntegerLiteral 2
+                      operand2:
+                        IntegerLiteral 1
+                  yIndex:
+                    Variable 'y'

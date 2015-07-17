@@ -19,8 +19,9 @@ Lexer::Lexer():
 	*/
 	allFrags.push_back(NFAFragment::createNFAForString("if").addAcceptingState(Token::Type::Keyword));
 	allFrags.push_back(NFAFragment::createNFAForString("else").addAcceptingState(Token::Type::Keyword));
-	allFrags.push_back(NFAFragment::createNFAForString("and").addAcceptingState(Token::Type::Keyword));
-	allFrags.push_back(NFAFragment::createNFAForString("or").addAcceptingState(Token::Type::Keyword));
+	allFrags.push_back(NFAFragment::createNFAForString("and").addAcceptingState(Token::Type::Operator)); // operator!
+	allFrags.push_back(NFAFragment::createNFAForString("or").addAcceptingState(Token::Type::Operator)); // operator!
+	allFrags.push_back(NFAFragment::createNFAForString("not").addAcceptingState(Token::Type::Operator)); // operator!
 	allFrags.push_back(NFAFragment::createNFAForString("struct").addAcceptingState(Token::Type::Keyword));
 
 	/*type idendifiers*/
@@ -43,13 +44,26 @@ Lexer::Lexer():
 
 	allFrags.push_back(NFAFragment::createNFAForString("quat").addAcceptingState(Token::Type::Keyword));
 
-	/*in, out*/
+	/*1D, 2D, 3D, Cube*/
+	allFrags.push_back(NFAFragment::createNFAForString("1D").addAcceptingState(Token::Type::Keyword));
+	allFrags.push_back(NFAFragment::createNFAForString("2D").addAcceptingState(Token::Type::Keyword));
+	allFrags.push_back(NFAFragment::createNFAForString("3D").addAcceptingState(Token::Type::Keyword));
+	allFrags.push_back(NFAFragment::createNFAForString("Cube").addAcceptingState(Token::Type::Keyword));
+
+	/*in, out, extern*/
 	allFrags.push_back(NFAFragment::createNFAForString("in").addAcceptingState(Token::Type::Keyword));
 	allFrags.push_back(NFAFragment::createNFAForString("out").addAcceptingState(Token::Type::Keyword));
+	allFrags.push_back(NFAFragment::createNFAForString("extern").addAcceptingState(Token::Type::Keyword));
 
 	/*true, false*/
 	allFrags.push_back(NFAFragment::createNFAForString("true").addAcceptingState(Token::Type::Keyword));
 	allFrags.push_back(NFAFragment::createNFAForString("false").addAcceptingState(Token::Type::Keyword));
+
+	/*rgba*/
+	allFrags.push_back(NFAFragment::createNFAForString("red").addAcceptingState(Token::Type::Keyword));
+	allFrags.push_back(NFAFragment::createNFAForString("green").addAcceptingState(Token::Type::Keyword));
+	allFrags.push_back(NFAFragment::createNFAForString("blue").addAcceptingState(Token::Type::Keyword));
+	allFrags.push_back(NFAFragment::createNFAForString("alpha").addAcceptingState(Token::Type::Keyword));
 
 
 	// for identifiers;
@@ -177,6 +191,9 @@ Lexer::Lexer():
 	allFrags.push_back(NFAFragment::createNFAForSingleSymbol(']').addAcceptingState(Token::Type::Operator));
 	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('{').addAcceptingState(Token::Type::Operator));
 	allFrags.push_back(NFAFragment::createNFAForSingleSymbol('}').addAcceptingState(Token::Type::Operator));
+
+	/*comma*/
+	allFrags.push_back(NFAFragment::createNFAForSingleSymbol(',').addAcceptingState(Token::Type::Operator));
 
 	this->dfa_ = NFAFragment::makeParallel(allFrags).convertToDFA();
 
