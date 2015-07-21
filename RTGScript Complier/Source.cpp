@@ -11,6 +11,8 @@
 #include "Lexer.h"
 #include "Token.h"
 
+#include "Parser.h"
+
 using namespace std;
 
 
@@ -58,7 +60,7 @@ void  main()
 	//cout << "Accepts? " << boolalpha << l.dfa_.acceptsString("&if") << '\n'; // not accepts - it is good;
 	//cout << "Accepts? " << boolalpha << l.dfa_.acceptsString(".") << '\n';;
 	
-	string userCodeFileName = "User code.txt";
+	string userCodeFileName = "User code2.txt";
 	ifstream userCodeFile(userCodeFileName);
 
 	if (!userCodeFile)
@@ -95,8 +97,21 @@ void  main()
 				break;
 			}
 		
-			delete token;
+			//delete token;
 		});
+		
+		Parser parser(tokens);
+		try
+		{
+			auto prog = parser.parse();
+			ofstream parserTree("parserTree.txt");
+			prog->serialize(parserTree, 0);
+			parserTree.close();
+		}
+		catch (ParserError pe)
+		{
+			cout << "[ParserError] " << pe.what() << '\n';
+		}
 
 	}
 	catch (exception& ex)

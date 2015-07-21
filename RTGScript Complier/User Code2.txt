@@ -1,0 +1,16 @@
+in[0] 2D circle;
+in[1] 2D triangle;
+out[0] 2D mix;
+
+extern int a;
+
+float b;
+b = 2+5*(7 - 3) -a;
+
+float c = 4+ b;
+
+if (x<0.5)
+	mix = circle{x*2,y};
+else {
+	mix = triangle{x*2-1,y};
+}

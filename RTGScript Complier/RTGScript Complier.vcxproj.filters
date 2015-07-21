@@ -70,6 +70,9 @@
     <Text Include="Serialized result DFA.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="User Code2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd">

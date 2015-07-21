@@ -176,6 +176,7 @@
     <ClCompile Include="FiniteAutomaton.cpp" />
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="NFA.cpp" />
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="UtilityClasses.cpp" />
@@ -185,6 +186,8 @@
     <ClInclude Include="FiniteAutomaton.h" />
     <ClInclude Include="Lexer.h" />
     <ClInclude Include="NFA.h" />
+    <ClInclude Include="Parser.h" />
+    <ClInclude Include="ParserClasses.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="UtilityClasses.h" />
   </ItemGroup>
@@ -193,6 +196,10 @@
     <Text Include="RESULTDFA.txt" />
     <Text Include="Serialized result DFA.txt" />
     <Text Include="User code.txt" />
+    <Text Include="User Code2.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ParserDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
