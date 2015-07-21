@@ -8,6 +8,45 @@
 
 using namespace std;
 
+
+
+// utility functions;
+const string digitToChar(int digit)
+{
+	switch (digit)
+	{
+	case 0: return "0";
+	case 1: return "1";
+	case 2: return "2";
+	case 3: return "3";
+	case 4: return "4";
+	case 5: return "5";
+	case 6: return "6";
+	case 7: return "7";
+	case 8: return "8";
+	case 9: return "9";
+
+	default: throw exception("Error! Integer is not a digit");
+	}
+}
+
+const string intToString(int number)
+{
+	string resStr = "";
+
+	while (number != 0)
+	{
+		resStr = digitToChar(number % 10) + resStr;
+		number /= 10;
+	}
+
+	if (resStr == "")
+		return "0";
+
+	return resStr;
+}
+
+
 // class LexicalErrorException definition;
 LexicalErrorException::LexicalErrorException(const char* msg) :
 	exception(msg)
@@ -61,83 +100,169 @@ bool DFA::acceptsString(const string& inputString) const
 
 vector<Token*> DFA::tokenize(const std::string& inputString) const
 {
+	//vector<Token*> tokens;
+	//
+	//istringstream myStream(inputString);
+	//string currReadStr = "";
+	//
+	//while (myStream >> currReadStr)
+	//{
+	//	const string* lastAcceptingStateName = nullptr;
+	//	const string* currStateName = &this->initStateName_;
+	//	int currTokenLength = 0;
+	//	int charsAfterlastAccepting = 0;
+	//	int startPos = 0;
+	//
+	//	MoveFunctionArgument arg;
+	//	for (int i = 0; i < currReadStr.length(); ++i)
+	//	{
+	//		arg.fromStateName_ = *currStateName;
+	//		arg.inputSymbol_ = currReadStr[i];
+	//
+	//		try
+	//		{
+	//			currStateName = &this->transitions_.at(arg);
+	//
+	//			bool isCurrStateAccepting = any_of(this->states_.begin(), this->states_.end(),
+	//				[&currStateName](const State& st)
+	//			{
+	//				return st.isAccepting_ && st.name_ == *currStateName;
+	//			});
+	//
+	//			if (isCurrStateAccepting)
+	//			{
+	//				lastAcceptingStateName = currStateName;
+	//				charsAfterlastAccepting = 0;
+	//			}
+	//			else
+	//			{
+	//				++charsAfterlastAccepting;
+	//			}
+	//
+	//			++currTokenLength;
+	//		}
+	//		catch (out_of_range ex)
+	//		{
+	//			if (lastAcceptingStateName == nullptr)
+	//			{
+	//				string message = "Lexical error: word \"" + currReadStr.substr(startPos, currReadStr.length()) + "\"";
+	//				throw exception(message.c_str());
+	//			}
+	//
+	//			int realTokenLen = currTokenLength - charsAfterlastAccepting;
+	//			tokens.push_back(Token::createToken(this->stateNameAcceptingTokens_.at(*lastAcceptingStateName), currReadStr.substr(startPos, realTokenLen)));
+	//			
+	//			startPos = startPos + realTokenLen;
+	//			currTokenLength = 0;
+	//
+	//			i -= (charsAfterlastAccepting + 1);
+	//
+	//			lastAcceptingStateName = nullptr;
+	//			currStateName = &this->initStateName_;
+	//		}
+	//
+	//		if (i == (currReadStr.length() - 1))
+	//		{
+	//			if (lastAcceptingStateName == nullptr)
+	//			{
+	//				string message = "Lexical error: word \"" + currReadStr.substr(startPos, currReadStr.length()) + "\"";
+	//				throw LexicalErrorException(message.c_str());
+	//			}
+	//
+	//			int realTokenLen = currTokenLength - charsAfterlastAccepting;
+	//			tokens.push_back(Token::createToken(this->stateNameAcceptingTokens_.at(*lastAcceptingStateName), currReadStr.substr(startPos, realTokenLen)));
+	//
+	//			break;
+	//		}
+	//	}
+	//}
+	//
+	//return tokens;
+
 	vector<Token*> tokens;
+	
+	istringstream allCodeStream(inputString);
+	string lineOfCode = "";
 
-	istringstream myStream(inputString);
-	string currReadStr = "";
-
-	while (myStream >> currReadStr)
+	for (int lineNumber = 1; getline(allCodeStream, lineOfCode, '\n'); ++lineNumber)
 	{
-		const string* lastAcceptingStateName = nullptr;
-		const string* currStateName = &this->initStateName_;
-		int currTokenLength = 0;
-		int charsAfterlastAccepting = 0;
-		int startPos = 0;
+		istringstream lineOfCodeStream(lineOfCode);
+		string currReadStr = "";
 
-		MoveFunctionArgument arg;
-		for (int i = 0; i < currReadStr.length(); ++i)
+		while (lineOfCodeStream >> currReadStr)
 		{
-			arg.fromStateName_ = *currStateName;
-			arg.inputSymbol_ = currReadStr[i];
+			const string* lastAcceptingStateName = nullptr;
+			const string* currStateName = &this->initStateName_;
+			int currTokenLength = 0;
+			int charsAfterlastAccepting = 0;
+			int startPos = 0;
 
-			try
+			MoveFunctionArgument arg;
+			for (int i = 0; i < currReadStr.length(); ++i)
 			{
-				currStateName = &this->transitions_.at(arg);
+				arg.fromStateName_ = *currStateName;
+				arg.inputSymbol_ = currReadStr[i];
 
-				bool isCurrStateAccepting = any_of(this->states_.begin(), this->states_.end(),
-					[&currStateName](const State& st)
+				try
 				{
-					return st.isAccepting_ && st.name_ == *currStateName;
-				});
+					currStateName = &this->transitions_.at(arg);
 
-				if (isCurrStateAccepting)
-				{
-					lastAcceptingStateName = currStateName;
-					charsAfterlastAccepting = 0;
+					bool isCurrStateAccepting = any_of(this->states_.begin(), this->states_.end(),
+						[&currStateName](const State& st)
+					{
+						return st.isAccepting_ && st.name_ == *currStateName;
+					});
+
+					if (isCurrStateAccepting)
+					{
+						lastAcceptingStateName = currStateName;
+						charsAfterlastAccepting = 0;
+					}
+					else
+					{
+						++charsAfterlastAccepting;
+					}
+
+					++currTokenLength;
 				}
-				else
+				catch (out_of_range ex)
 				{
-					++charsAfterlastAccepting;
-				}
+					if (lastAcceptingStateName == nullptr)
+					{
+						string message = "LINE " + intToString(lineNumber) + " \t-\t " 
+							+ " Lexical error: word \"" + currReadStr.substr(startPos, currReadStr.length()) + "\"";
+						throw exception(message.c_str());
+					}
 
-				++currTokenLength;
-			}
-			catch (out_of_range ex)
-			{
-				if (lastAcceptingStateName == nullptr)
-				{
-					string message = "Lexical error: word \"" + currReadStr.substr(startPos, currReadStr.length()) + "\"";
-					throw exception(message.c_str());
-				}
+					int realTokenLen = currTokenLength - charsAfterlastAccepting;
+					tokens.push_back(Token::createToken(this->stateNameAcceptingTokens_.at(*lastAcceptingStateName), currReadStr.substr(startPos, realTokenLen)));
 
-				int realTokenLen = currTokenLength - charsAfterlastAccepting;
-				tokens.push_back(Token::createToken(this->stateNameAcceptingTokens_.at(*lastAcceptingStateName), currReadStr.substr(startPos, realTokenLen)));
-				
-				startPos = startPos + realTokenLen;
-				currTokenLength = 0;
+					startPos = startPos + realTokenLen;
+					currTokenLength = 0;
 
-				i -= (charsAfterlastAccepting + 1);
+					i -= (charsAfterlastAccepting + 1);
 
-				lastAcceptingStateName = nullptr;
-				currStateName = &this->initStateName_;
-			}
-
-			if (i == (currReadStr.length() - 1))
-			{
-				if (lastAcceptingStateName == nullptr)
-				{
-					string message = "Lexical error: word \"" + currReadStr.substr(startPos, currReadStr.length()) + "\"";
-					throw LexicalErrorException(message.c_str());
+					lastAcceptingStateName = nullptr;
+					currStateName = &this->initStateName_;
 				}
 
-				int realTokenLen = currTokenLength - charsAfterlastAccepting;
-				tokens.push_back(Token::createToken(this->stateNameAcceptingTokens_.at(*lastAcceptingStateName), currReadStr.substr(startPos, realTokenLen)));
+				if (i == (currReadStr.length() - 1))
+				{
+					if (lastAcceptingStateName == nullptr)
+					{
+						string message = "LINE " + intToString(lineNumber) + " \t-\t "
+							+ " Lexical error: word \"" + currReadStr.substr(startPos, currReadStr.length()) + "\"";
+						throw LexicalErrorException(message.c_str());
+					}
 
-				break;
+					int realTokenLen = currTokenLength - charsAfterlastAccepting;
+					tokens.push_back(Token::createToken(this->stateNameAcceptingTokens_.at(*lastAcceptingStateName), currReadStr.substr(startPos, realTokenLen)));
+
+					break;
+				}
 			}
 		}
 	}
-
 	return tokens;
 }
 

@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 
+
+
 // State of NFA;
 struct State
 {

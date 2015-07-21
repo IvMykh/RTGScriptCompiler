@@ -4,10 +4,6 @@
 
 #include <vector>
 
-// utility functions;
-bool isCharDigit(const char ch);
-bool isStringInteger(const std::string& s);
-
 // for generating unique state names (significant for NFA's combinators and generators);
 class StateNamesGenerator
 {

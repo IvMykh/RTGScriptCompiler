@@ -3,6 +3,14 @@
 
 #include <vector>
 
+
+
+// utility functions;
+const std::string digitToChar(int digit);
+const std::string intToString(int number);
+
+
+
 class Token;
 
 class LexicalErrorException

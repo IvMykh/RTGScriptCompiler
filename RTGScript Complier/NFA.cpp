@@ -8,20 +8,7 @@
 
 using namespace std;
 
-// utility functions;
-bool isCharDigit(const char ch)
-{
-	return 48 <= ch && ch <= 57;
-}
 
-bool isStringInteger(const string& s)
-{
-	auto it = s.begin();
-	while (it != s.end() && isCharDigit(*it)) 
-		++it;
-
-	return !s.empty() && it == s.end();
-}
 
 // class NFAStateNamesGenerator definition;
 const string StateNamesGenerator::digitToChar(int digit)
