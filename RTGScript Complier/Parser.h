@@ -1,9 +1,11 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "ParserClasses.h"
+#include <map>
+#include "Instructions.h"
 #include "Token.h"
 using namespace std;
+using namespace Instructions;
 
 class ParserError
 {
@@ -16,18 +18,29 @@ public:
 	{}
 	string what()
 	{
-		return "Error in token '" + token->getTokenTypeString() + "'. " + message + ".";
+		string tokenValue = "";
+		switch (token->getTokenType())
+		{
+		case Token::Type::Keyword:			tokenValue = ((KeywordToken*)token)->getValue(); break;
+		case Token::Type::Identifier:		tokenValue = ((IdentifierToken*)token)->getValue(); break;
+		case Token::Type::IntegerLiteral:	tokenValue = to_string(((IntegerLiteralToken*)token)->getValue()); break;
+		case Token::Type::RealLiteral:		tokenValue = to_string(((RealLiteralToken*)token)->getValue()); break;
+		case Token::Type::Operator:			tokenValue = ((OperatorToken*)token)->getValue(); break;
+		default:							throw exception("Unexpected token type\n");
+			break;
+		}
+		return "Error in token '" + tokenValue + "'. " + message + ".";
 	}
 };
 
 class Parser
 {
 	vector<Token*> tokens;
+	multimap <string, Expressions::Storage*> storages;
+
 	typedef vector<Token*>::iterator TokenIter;
 public:
-	Parser(vector<Token*> tkns) :
-		tokens(tkns)
-	{}
+	Parser(vector<Token*> tkns);
 
 	bool isOperator(TokenIter& iter);
 	bool isOperator(TokenIter& iter, string op);
@@ -35,23 +48,24 @@ public:
 	bool isKeyword(TokenIter& iter, string kw);
 	bool isIdentifier(TokenIter& iter);
 	string getIdentifier(TokenIter& iter);
-	Variable* isVariable(TokenIter& iter);
-	IntegerLiteral* isIntegerLiteral(TokenIter& iter);
-	RealLiteral* isRealLiteral(TokenIter& iter);
-	BoolLiteral* isBoolLiteral(TokenIter& iter);
-	Literal* isLiteral(TokenIter& iter);
-	Function* isFunctionToken(TokenIter& iter);
-	Operator* isOperatorToken(TokenIter& iter);
+	Expressions::Storage::Type* isTypeName(TokenIter& iter);
+	Expressions::Storage* isStorage(TokenIter& iter);
+	Expressions::Storages::Literal* isIntegerLiteral(TokenIter& iter);
+	Expressions::Storages::Literal* isRealLiteral(TokenIter& iter);
+	Expressions::Storages::Literal* isBoolLiteral(TokenIter& iter);
+	Expressions::Storages::Literal* isVecMatLiteral(TokenIter& iter);
+	Expressions::Storages::Literal* isLiteral(TokenIter& iter);
+	Expressions::Operators::BinaryOperator* isBinaryOperator(TokenIter& iter);
 	Block* isBlock(TokenIter& iter);
 	Instruction* isInstruction(TokenIter& iter);
-	Declaration* isDeclaration(TokenIter& iter); // + Definition
-	IfStatement* isIfStatement(TokenIter& iter); // + IfElseStatement
-	Assignement* isAssignement(TokenIter& iter);
 	bool isEmptyInstruction(TokenIter& iter);
-	Qualifier* isQualifier(TokenIter& iter);
-	InOutQualifier* isInOutQualifier(TokenIter& iter);
+	Definition* isDefinition(TokenIter& iter);
+	Expressions::Operators::Binary::Assignment* isAssignment(TokenIter& iter);
 	Expression* isExpression(TokenIter& iter);
-	VariableType* isTypeName(TokenIter& iter);
 
 	Block* parse();
+
+	multimap <string, Expressions::Storage*>* getStorages();
+
+	~Parser();
 };

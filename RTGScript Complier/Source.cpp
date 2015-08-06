@@ -12,6 +12,7 @@
 #include "Token.h"
 
 #include "Parser.h"
+#include "TreeSerializer.h"
 
 using namespace std;
 
@@ -60,7 +61,7 @@ void  main()
 	//cout << "Accepts? " << boolalpha << l.dfa_.acceptsString("&if") << '\n'; // not accepts - it is good;
 	//cout << "Accepts? " << boolalpha << l.dfa_.acceptsString(".") << '\n';;
 	
-	string userCodeFileName = "User code2.txt";
+	string userCodeFileName = "UserCode3.txt";
 	ifstream userCodeFile(userCodeFileName);
 
 	if (!userCodeFile)
@@ -104,9 +105,7 @@ void  main()
 		try
 		{
 			auto prog = parser.parse();
-			ofstream parserTree("parserTree.txt");
-			prog->serialize(parserTree, 0);
-			parserTree.close();
+			prog->Accept(new TreeSerializer(parser.getStorages(), cout));
 		}
 		catch (ParserError pe)
 		{

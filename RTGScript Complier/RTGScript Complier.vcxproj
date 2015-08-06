@@ -174,22 +174,27 @@
   <ItemGroup>
     <ClCompile Include="DFA.cpp" />
     <ClCompile Include="FiniteAutomaton.cpp" />
+    <ClCompile Include="Instructions.cpp" />
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="NFA.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Token.cpp" />
+    <ClCompile Include="TreeSerializer.cpp" />
     <ClCompile Include="UtilityClasses.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DFA.h" />
     <ClInclude Include="FiniteAutomaton.h" />
+    <ClInclude Include="Instructions.h" />
     <ClInclude Include="Lexer.h" />
     <ClInclude Include="NFA.h" />
     <ClInclude Include="Parser.h" />
-    <ClInclude Include="ParserClasses.h" />
     <ClInclude Include="Token.h" />
+    <ClInclude Include="Translator.h" />
+    <ClInclude Include="TreeSerializer.h" />
     <ClInclude Include="UtilityClasses.h" />
+    <ClInclude Include="Visitor.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Lexer output.txt" />
@@ -197,6 +202,7 @@
     <Text Include="Serialized result DFA.txt" />
     <Text Include="User code.txt" />
     <Text Include="User Code2.txt" />
+    <Text Include="UserCode3.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ParserDiagram.cd" />

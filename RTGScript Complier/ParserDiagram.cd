@@ -1,299 +1,222 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Struct Name="vec2" Collapsed="true">
+    <Position X="18.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="vec3" Collapsed="true">
+    <Position X="20" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAQAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="vec4" Collapsed="true">
+    <Position X="21.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhgAQAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ivec2" Collapsed="true">
+    <Position X="18.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ivec3" Collapsed="true">
+    <Position X="20" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAQAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ivec4" Collapsed="true">
+    <Position X="21.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhgAQAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="mat2" Collapsed="true">
+    <Position X="18.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="mat3" Collapsed="true">
+    <Position X="20" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="mat4" Collapsed="true">
+    <Position X="21.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
   <Struct Name="Instruction" Collapsed="true">
-    <Position X="12.75" Y="0.5" Width="1.5" />
+    <Position X="10" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAQABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Instructions::Block" Collapsed="true">
+    <Position X="4.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIACAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Instructions::Definition" Collapsed="true">
+    <Position X="6.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAACAABAAAAAAAAAAAAAAAAAAAGAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Instructions::Expression" Collapsed="true">
+    <Position X="12.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAABAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Instructions::Expressions::Storage" Collapsed="true">
+    <Position X="11.25" Y="4.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Struct Name="Instructions::Expressions::Storage::External" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Instructions.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Enum Name="Instructions::Expressions::Storage::Type" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Instructions.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAgABAFAAAAAAAAAAAgA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Instructions::Expressions::Operator" Collapsed="true">
+    <Position X="15.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Instructions::Expressions::Storages::Literal" Collapsed="true">
+    <Position X="9" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Instructions::Expressions::Storages::Variable" Collapsed="true">
+    <Position X="11.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Instructions::Expressions::Storages::Out" Collapsed="true">
+    <Position X="11.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Instructions::Expressions::Storages::In" Collapsed="true">
+    <Position X="13.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Instructions::Expressions::Operators::Binary::Assignment" Collapsed="true">
+    <Position X="15.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAQAAAAAIAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Instructions.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="uint8" Collapsed="true">
+    <Position X="21.75" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
+      <FileName>Instructions.h</FileName>
     </TypeIdentifier>
-  </Struct>
-  <Struct Name="Block" Collapsed="true">
-    <Position X="3" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="Expression" Collapsed="true">
-    <Position X="11.75" Y="1.75" Width="1.5" />
+  </Typedef>
+  <Typedef Name="int16" Collapsed="true">
+    <Position X="20" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
+      <FileName>Instructions.h</FileName>
     </TypeIdentifier>
-  </Struct>
-  <Struct Name="Qualifier" Collapsed="true">
-    <Position X="23.5" Y="5.25" Width="1.5" />
+  </Typedef>
+  <Typedef Name="uint16" Collapsed="true">
+    <Position X="21.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
+      <FileName>Instructions.h</FileName>
     </TypeIdentifier>
-  </Struct>
-  <Struct Name="ExternQualifier" Collapsed="true">
-    <Position X="24.5" Y="6.5" Width="1.5" />
+  </Typedef>
+  <Typedef Name="int32" Collapsed="true">
+    <Position X="21.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
+      <FileName>Instructions.h</FileName>
     </TypeIdentifier>
-  </Struct>
-  <Struct Name="InOutQualifier">
-    <Position X="22.25" Y="6.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAABAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="type" />
-    </ShowAsAssociation>
-  </Struct>
-  <Struct Name="Variable" Collapsed="true">
-    <Position X="10.5" Y="3.75" Width="1.5" />
-    <InheritanceLine Type="Expression" ManuallyRouted="true">
-      <Path>
-        <Point X="12.5" Y="2.441" />
-        <Point X="12.5" Y="3.245" />
-        <Point X="11.25" Y="3.245" />
-        <Point X="11.25" Y="3.75" />
-      </Path>
-    </InheritanceLine>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="VecVariable" Collapsed="true">
-    <Position X="7" Y="5.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="MatVariable" Collapsed="true">
-    <Position X="9.25" Y="5.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAgAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="TexVariable" Collapsed="true">
-    <Position X="12.75" Y="5.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="Tex2DVariable" Collapsed="true">
-    <Position X="12.75" Y="6.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="Tex3DVariable" Collapsed="true">
-    <Position X="11.5" Y="8" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="TexCubeVariable">
-    <Position X="13.75" Y="8" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="side" />
-    </ShowAsAssociation>
-  </Struct>
-  <Struct Name="Literal" Collapsed="true">
-    <Position X="17.25" Y="3.75" Width="1.5" />
-    <InheritanceLine Type="Expression" ManuallyRouted="true">
-      <Path>
-        <Point X="12.5" Y="2.441" />
-        <Point X="12.5" Y="3.31" />
-        <Point X="18" Y="3.31" />
-        <Point X="18" Y="3.75" />
-      </Path>
-    </InheritanceLine>
+  </Typedef>
+  <Typedef Name="uint32" Collapsed="true">
+    <Position X="18.25" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
+      <FileName>Instructions.h</FileName>
     </TypeIdentifier>
-  </Struct>
-  <Struct Name="IntegerLiteral" Collapsed="true">
-    <Position X="17.25" Y="5.25" Width="1.5" />
+  </Typedef>
+  <Typedef Name="int64" Collapsed="true">
+    <Position X="18.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
     </TypeIdentifier>
-  </Struct>
-  <Struct Name="RealLiteral" Collapsed="true">
-    <Position X="19.5" Y="5.25" Width="1.5" />
+  </Typedef>
+  <Typedef Name="uint64" Collapsed="true">
+    <Position X="20" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
     </TypeIdentifier>
-  </Struct>
-  <Struct Name="BoolLiteral" Collapsed="true">
-    <Position X="15" Y="5.25" Width="1.5" />
+  </Typedef>
+  <Typedef Name="float32" Collapsed="true">
+    <Position X="18.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
     </TypeIdentifier>
-  </Struct>
-  <Struct Name="Operator">
-    <Position X="15" Y="1.75" Width="1.5" />
-    <AssociationLine Name="operand1" Type="Expression" FixedFromPoint="true">
-      <Path>
-        <Point X="15" Y="2.188" />
-        <Point X="13.25" Y="2.188" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="operand2" Type="Expression" FixedFromPoint="true">
-      <Path>
-        <Point X="15" Y="1.938" />
-        <Point X="13.25" Y="1.938" />
-      </Path>
-    </AssociationLine>
+  </Typedef>
+  <Typedef Name="int8" Collapsed="true">
+    <Position X="20" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAAAAAAQAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions.h</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="operand1" />
-      <Field Name="operand2" />
-      <Field Name="type" />
-    </ShowAsAssociation>
-  </Struct>
-  <Struct Name="Function" Collapsed="true">
-    <Position X="9" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="IfElseStatement">
-    <Position X="28.25" Y="4.25" Width="1.5" />
-    <AssociationLine Name="ifFalse" Type="Instruction" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="29.75" Y="4.75" />
-        <Point X="30.125" Y="4.75" />
-        <Point X="30.125" Y="0.625" />
-        <Point X="14.25" Y="0.625" />
-      </Path>
-    </AssociationLine>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="ifFalse" />
-    </ShowAsAssociation>
-  </Struct>
-  <Struct Name="IfStatement">
-    <Position X="28.25" Y="2" Width="1.5" />
-    <InheritanceLine Type="Instruction" FixedToPoint="true">
-      <Path>
-        <Point X="13.5" Y="1.062" />
-        <Point X="13.5" Y="1.375" />
-        <Point X="28.625" Y="1.375" />
-        <Point X="28.625" Y="2" />
-      </Path>
-    </InheritanceLine>
-    <AssociationLine Name="ifTrue" Type="Instruction" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="29.062" Y="2" />
-        <Point X="29.062" Y="0.875" />
-        <Point X="14.25" Y="0.875" />
-      </Path>
-    </AssociationLine>
-    <TypeIdentifier>
-      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="ifTrue" />
-    </ShowAsAssociation>
-  </Struct>
-  <Struct Name="Assignement">
-    <Position X="5.25" Y="3.5" Width="1.5" />
-    <InheritanceLine Type="Expression" ManuallyRouted="true" FixedToPoint="true">
-      <Path>
-        <Point X="12.5" Y="2.441" />
-        <Point X="12.5" Y="3.245" />
-        <Point X="6.375" Y="3.245" />
-        <Point X="6.375" Y="3.5" />
-      </Path>
-    </InheritanceLine>
-    <AssociationLine Name="from" Type="Expression" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="5.562" Y="3.5" />
-        <Point X="5.562" Y="2.739" />
-        <Point X="12" Y="2.739" />
-        <Point X="12" Y="2.441" />
-      </Path>
-    </AssociationLine>
-    <TypeIdentifier>
-      <HashCode>AAAAAAIAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="to" />
-      <Field Name="from" />
-    </ShowAsAssociation>
-  </Struct>
-  <Struct Name="Definition" Collapsed="true">
-    <Position X="23.5" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="Declaration">
-    <Position X="23.5" Y="1.75" Width="1.5" />
-    <AssociationLine Name="qualifier" Type="Qualifier" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="23.5" Y="2.438" />
-        <Point X="23.125" Y="2.438" />
-        <Point X="23.125" Y="5.5" />
-        <Point X="23.5" Y="5.5" />
-      </Path>
-    </AssociationLine>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="qualifier" />
-    </ShowAsAssociation>
-  </Struct>
-  <Enum Name="InOutType" Collapsed="true">
-    <Position X="20" Y="7" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AQAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="CubeSide" Collapsed="true">
-    <Position X="16" Y="8.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAIAAACBAAAAAAAAAAAAAAEAQgAAAAAAAAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="OperatorType" Collapsed="true">
-    <Position X="17.25" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACgAsAwAAAAAACAAAAA=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="VariableType" Collapsed="true">
-    <Position X="26" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>IABBAAABAAAEACACAAAIAAAAEAAGAAAGAAQAAhAAAAE=</HashCode>
-      <FileName>ParserClasses.h</FileName>
-    </TypeIdentifier>
-  </Enum>
+  </Typedef>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
